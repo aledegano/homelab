@@ -1,0 +1,28 @@
+---
+- name: Create user on remote host
+  hosts: all
+  user: pi
+  become: yes
+  become_method: sudo
+  become_user: root
+  vars: 
+    createuser: 'hal'
+  tasks:
+  - name: Setup | create user
+    user:
+      name: "{{ createuser }}"
+      password: "{{ lookup('password', '.pass.txt length=16 chars=ascii_letters') }}"
+      shell: /bin/bash
+
+  - name: Setup | authorized key upload
+    authorized_key: user={{ createuser }}
+      key="{{ lookup('file', '~/.ssh/id_rsa_raspberry.pub') }}"
+      path='/home/{{ createuser }}/.ssh/authorized_keys'
+      manage_dir=no 
+
+  - name: Sudoers | update sudoers file and validate
+    lineinfile: "dest=/etc/sudoers
+      insertafter=EOF
+      line='{{ createuser }} ALL=(ALL) NOPASSWD: ALL'
+      regexp='{{ createuser }} ALL=(ALL) NOPASSWD: ALL'
+      state=present"
