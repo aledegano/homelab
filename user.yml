@@ -1,28 +1,41 @@
 ---
 - name: Create user on remote host
   hosts: all
-  user: pi
-  become: yes
-  become_method: sudo
-  become_user: root
   vars: 
     createuser: 'hal'
+  roles:
+    - role: chrisgavin.ansible-ssh-host-signer
+      ssh_host_signer_hostnames: "192.168.1.116"
+      ssh_host_signer_id: "raspi"
   tasks:
+  - apt: name=python-pip
+    become: yes
+    become_user: root
   - name: Setup | create user
+    become: yes
+    become_user: root
     user:
       name: "{{ createuser }}"
       password: "{{ lookup('password', '.pass.txt length=16 chars=ascii_letters') }}"
       shell: /bin/bash
 
   - name: Setup | authorized key upload
+    become: yes
+    become_user: root
     authorized_key: user={{ createuser }}
       key="{{ lookup('file', '~/.ssh/id_rsa_raspberry.pub') }}"
       path='/home/{{ createuser }}/.ssh/authorized_keys'
       manage_dir=no 
 
   - name: Sudoers | update sudoers file and validate
+    become: yes
+    become_user: root
     lineinfile: "dest=/etc/sudoers
-      insertafter=EOF
       line='{{ createuser }} ALL=(ALL) NOPASSWD: ALL'
       regexp='{{ createuser }} ALL=(ALL) NOPASSWD: ALL'
       state=present"
+
+#  - name: Setup | remove pi user
+#    user:
+#      name: "pi"
+#      state: absent
