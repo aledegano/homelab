@@ -35,7 +35,3 @@
       regexp='{{ createuser }} ALL=(ALL) NOPASSWD: ALL'
       state=present"
 
-#  - name: Setup | remove pi user
-#    user:
-#      name: "pi"
-#      state: absent

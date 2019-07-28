@@ -1,0 +1,40 @@
+- name: Deploy k3s
+  hosts: all
+
+  roles:
+    - role: xanmanning.k3s
+      become: yes
+  
+  tasks:
+
+  - name: Setup | remove pi user
+    become: yes
+    user:
+      name: "pi"
+      state: absent
+
+  - name: Ensure dest dir for kubectl conf exists
+    local_action:
+      module: file
+      path: ~/.kube/
+      state: directory
+
+  - name: Get k3s.conf
+    become: yes
+    fetch:
+      src: /etc/rancher/k3s/k3s.yaml
+      dest: ~/.kube/config
+      flat: yes
+
+  - name: Update host name in k3s config
+    local_action:
+      module: replace
+      path: ~/.kube/config
+      regexp: 'localhost'
+      replace: "{{ inventory_hostname }}"
+
+  - name: Enable containers
+    become: yes
+    lineinfile:
+      path: /boot/cmdline.txt
+      line: cgroup_enable=cpuset cgroup_memory=1 cgroup_enable=memory
