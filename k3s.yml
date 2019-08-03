@@ -6,7 +6,6 @@
       become: yes
   
   tasks:
-
   - name: Setup | remove pi user
     become: yes
     user:

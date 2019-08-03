@@ -1,0 +1,12 @@
+---
+- name: Configure k3s
+  hosts: localhost
+
+  tasks:
+  - name: Query storageclasses
+    command: "kubectl get storageclass"
+    register: storageclass
+
+  - name: Enable local path storage
+    command: "kubectl apply -f https://raw.githubusercontent.com/rancher/local-path-provisioner/master/deploy/local-path-storage.yaml"
+    when: "'local-path' not in storageclass.stdout"
