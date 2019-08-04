@@ -31,3 +31,16 @@
       path: ~/.kube/config
       regexp: 'localhost'
       replace: "{{ inventory_hostname }}"
+
+  - name: Ensure remote dir for kubectl conf exists
+    file:
+      path: "/home/{{ ansible_user_id }}/.kube"
+      state: directory
+
+  - name: Copy k3s config in raspi user home
+    become: yes
+    copy:
+      remote_src: True
+      src: /etc/rancher/k3s/k3s.yaml
+      dest: "/home/{{ ansible_user_id }}/.kube/config"
+      owner: "{{ ansible_user_id }}"

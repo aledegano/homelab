@@ -1,6 +1,6 @@
 ---
 - name: Configure k3s
-  hosts: localhost
+  hosts: all
 
   tasks:
   - name: Query storageclasses
@@ -10,3 +10,17 @@
   - name: Enable local path storage
     command: "kubectl apply -f https://raw.githubusercontent.com/rancher/local-path-provisioner/master/deploy/local-path-storage.yaml"
     when: "'local-path' not in storageclass.stdout"
+
+  - name: Download helm installation script
+    get_url: url=https://raw.githubusercontent.com/kubernetes/helm/master/scripts/get dest=/tmp/helm_install_script.sh force=yes mode="0755"
+
+  - name: Install helm
+    command: "/tmp/helm_install_script.sh"
+    register: command_result
+    changed_when: "'is up-to-date' not in command_result.stdout"
+
+  - name: Initialize helm
+    become: yes
+    command: "helm init --history-max 200"
+    environment:
+      KUBECONFIG: "/etc/rancher/k3s/k3s.yaml"
