@@ -2,10 +2,10 @@
 - name: Create user on remote host
   hosts: all
   vars: 
-    createuser: 'hal'
+    createuser: "{{ ssh_username }}"
   roles:
     - role: chrisgavin.ansible-ssh-host-signer
-      ssh_host_signer_hostnames: "192.168.1.116"
+      ssh_host_signer_hostnames: "{{ ssh_signer_hostname }}"
       ssh_host_signer_id: "raspi"
   tasks:
   - apt: name=python-pip
@@ -23,7 +23,7 @@
     become: yes
     become_user: root
     authorized_key: user={{ createuser }}
-      key="{{ lookup('file', '~/.ssh/id_rsa_raspberry.pub') }}"
+      key="{{ lookup('file', ssh_public_key ) }}"
       path='/home/{{ createuser }}/.ssh/authorized_keys'
       manage_dir=no 
 
@@ -35,3 +35,12 @@
       regexp='{{ createuser }} ALL=(ALL) NOPASSWD: ALL'
       state=present"
 
+  - name: Enable containers
+    become: yes
+    lineinfile:
+      path: /boot/cmdline.txt
+      line: cgroup_enable=cpuset cgroup_memory=1 cgroup_enable=memory
+
+  - name: Reboot to enable containers
+    become: yes
+    reboot:
