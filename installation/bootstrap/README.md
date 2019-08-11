@@ -12,6 +12,6 @@ The following variables must be passed:
 `ssh_username`: The username of the default user to log in.
 `ssh_public_key`: The path to the SSH public key to authorize for the user.
 ```
-ansible-playbook bootstrap.yml --extra-vars "ssh_signer_hostname=foo,192.168.1.2 ssh_username=foo_user ssh_public_key=~/.ssh/id_rsa.pub"
+ansible-playbook bootstrap.yml -i inventory.yml
 ```
 The password associated with the default user is generated randomly and will be copied back on the host.
