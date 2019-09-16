@@ -6,6 +6,9 @@
       become: yes
   
   tasks:
+  - name: Deploy k3s
+    command: "curl -sfL https://get.k3s.io | sh -"
+
   - name: Setup | remove pi user
     become: yes
     user:
