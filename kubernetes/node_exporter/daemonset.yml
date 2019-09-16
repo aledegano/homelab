@@ -2,7 +2,6 @@ apiVersion: apps/v1
 kind: DaemonSet
 metadata:
   name: node-exporter
-  namespace: kube-system
   labels:
     k8s-app: node-exporter
     kubernetes.io/cluster-service: "true"

@@ -1,0 +1,59 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: prometheus
+  labels:
+    k8s-app: prometheus
+    kubernetes.io/cluster-service: "true"
+    addonmanager.kubernetes.io/mode: Reconcile
+    version: v2.12.0
+spec:
+  replicas: 1
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 1
+      maxSurge: 1
+  selector:
+    matchLabels:
+      k8s-app: prometheus
+
+  template:
+    metadata:
+      labels:
+        k8s-app: prometheus
+    spec:
+      volumes:
+        - name: nfs
+          nfs: 
+            server: 192.168.1.7
+            path: /volume1/NFS_unauthenticated
+        - name: config-volume
+          configMap:
+            name: prometheus-config
+      containers:
+        - name: prometheus-server
+          image: "prom/prometheus:v2.12.0"
+          args:
+            - --config.file=/etc/config/prometheus.yml
+            - --storage.tsdb.path=/data
+          ports:
+            - containerPort: 9090
+          readinessProbe:
+            httpGet:
+              path: /-/ready
+              port: 9090
+            initialDelaySeconds: 30
+            timeoutSeconds: 30
+          livenessProbe:
+            httpGet:
+              path: /-/healthy
+              port: 9090
+            initialDelaySeconds: 30
+            timeoutSeconds: 30
+          volumeMounts:
+            - name: nfs
+              mountPath: /data
+              subPath: "prometheus"
+            - name: config-volume
+              mountPath: /etc/config
