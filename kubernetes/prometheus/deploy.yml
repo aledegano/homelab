@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: prometheus
   labels:
-    k8s-app: prometheus
+    app: prometheus
     kubernetes.io/cluster-service: "true"
     addonmanager.kubernetes.io/mode: Reconcile
     version: v2.12.0
@@ -16,16 +16,16 @@ spec:
       maxSurge: 1
   selector:
     matchLabels:
-      k8s-app: prometheus
+      app: prometheus
 
   template:
     metadata:
       labels:
-        k8s-app: prometheus
+        app: prometheus
     spec:
       volumes:
         - name: nfs
-          nfs: 
+          nfs:
             server: 192.168.1.7
             path: /volume1/NFS_unauthenticated
         - name: config-volume

@@ -20,7 +20,7 @@ spec:
         k8s-app: node-exporter
         version: v0.18.1
     spec:
-      priorityClassName: system-node-critical
+      # priorityClassName: system-node-critical
       containers:
         - name: prometheus-node-exporter
           image: "prom/node-exporter:v0.18.1"

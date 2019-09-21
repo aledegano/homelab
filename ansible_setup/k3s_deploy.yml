@@ -3,12 +3,10 @@
 
   roles:
     - role: xanmanning.k3s
+      k3s_release_version: v0.8.1 # v0.9.0 is bugged: https://github.com/rancher/k3s/issues/828
       become: yes
-  
-  tasks:
-  - name: Deploy k3s
-    command: "curl -sfL https://get.k3s.io | sh -"
 
+  tasks:
   - name: Setup | remove pi user
     become: yes
     user:
