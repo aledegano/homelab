@@ -1,0 +1,49 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: minio
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: minio
+  minReadySeconds: 10
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 1
+      maxSurge: 1
+  template:
+    metadata:
+      labels:
+        app: minio
+    spec:
+      volumes:
+        - name: nfs
+          nfs:
+            server: 192.168.1.7
+            path: /volume1/NFS_unauthenticated
+      containers:
+      - name: minio
+        image: jessestuart/minio:RELEASE.2019-09-18T21-55-05Z
+        args:
+          - server
+          - /data
+        env:
+          - name: MINIO_ACCESS_KEY
+            valueFrom:
+              secretKeyRef:
+                name: minio-secret
+                key: access_key
+          - name: MINIO_SECRET_KEY
+            valueFrom:
+              secretKeyRef:
+                name: minio-secret
+                key: secret_key
+        ports:
+          - containerPort: 9000
+        volumeMounts:
+          - name: nfs
+            mountPath: /data
+            subPath: "minio"
