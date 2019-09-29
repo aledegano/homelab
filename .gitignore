@@ -1,6 +1,5 @@
 .pass.txt
-packer/output-arm-image
-packer/packer_cache
+nodemcu/location.lua
 
 #IDE
 .vscode/
