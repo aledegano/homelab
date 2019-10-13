@@ -24,13 +24,20 @@ spec:
         app: prometheus
     spec:
       volumes:
-        - name: nfs
-          nfs:
-            server: 192.168.1.7
-            path: /volume1/NFS_unauthenticated
         - name: config-volume
           configMap:
             name: prometheus-config
+        - name: data
+          persistentVolumeClaim:
+            claimName: local-storage
+      initContainers:
+      - name: "init-chown-data"
+        image: "busybox:latest"
+        imagePullPolicy: "IfNotPresent"
+        command: ["chown", "-R", "65534:65534", "/data"]
+        volumeMounts:
+        - name: data
+          mountPath: /data
       containers:
         - name: prometheus-server
           image: "prom/prometheus:v2.12.0"
@@ -52,8 +59,7 @@ spec:
             initialDelaySeconds: 30
             timeoutSeconds: 30
           volumeMounts:
-            - name: nfs
+            - name: data
               mountPath: /data
-              subPath: "prometheus"
             - name: config-volume
               mountPath: /etc/config

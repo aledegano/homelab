@@ -13,6 +13,11 @@
       name: "pi"
       state: absent
 
+  - name: local-storage
+    file:
+      path: /data
+      state: directory
+
   - name: Ensure dest dir for kubectl conf exists
     local_action:
       module: file
