@@ -1,41 +1,50 @@
-function makepromlines(prefix, name, source)
-  local buffer = {"# TYPE ", prefix, name, " gauge\n", prefix, name, " ", source, "\n"}
-  local lines = table.concat(buffer)
-  return lines
+broker_addr = "192.168.1.116"
+broker_port = 31883
+-- init mqtt client with keepalive timer 120sec
+clientId=node.chipid()
+m = mqtt.Client(clientId, 120, "user", "password")
+-- setup Last Will and Testament (optional)
+-- Broker will publish a message with qos = 0, retain = 0, data = "offline" 
+-- to topic "/lwt" if client don't send keepalive packet
+m:lwt("/lwt", "offline", 0, 0)
+m:on("connect", function(con) print ("connected") end)
+m:on("offline", 
+     function(con) 
+          print ("offline") 
+          node.restart()
+     end
+)
+-- on publish message receive event
+m:on("message", function(conn, topic, data) 
+  print(topic .. ":" ) 
+  if data ~= nil then
+    print(data)
+  end
+end)
+function connect()
+     -- subscribe topic with qos = 0
+     m:connect(broker_addr, broker_port, 0, 
+          function(conn) 
+               print("connected") 
+               publish()
+               start()
+          end
+     )
 end
 
-function metrics()
+function publish()
     local rand = math.random(100)
-    -- this table contains the metric names and sources.
-    local metricspecs = {
-      "random_number", rand,
-      "fixed_number", 42,
-      }
-    local metrics = {}
-    for i = 1, #metricspecs, 2 do
-      table.insert(metrics, makepromlines("nodemcu_", metricspecs[i], metricspecs[i+1]))
-    end
-    local body = table.concat(metrics)
-    return body
+    msg = '{ "Id": '..clientId..', "fix": "42", "rand": "'..rand..'" }'
+    m:publish("/home/sensor/random",msg,0,0, function(conn) print("sent") end)
+end
+function start()
+     tmr.alarm(1, 20000, 1, function() 
+          if pcall(publish) then
+               print("Send OK")
+          else
+               print("Send err" )
+          end
+     end)
 end
 
-function response()
-  local header = "HTTP/1.0 200 OK\r\nServer: NodeMCU on ESP8266\r\nContent-Type: text/plain; version=0.0.4\r\n\r\n"
-  local response = header .. metrics()
-  print("> " .. response)
-  return response
-end
-
--- Sensor setup here
-
-srv = net.createServer(net.TCP, 20) -- 20s timeout
-
-if srv then
-  srv:listen(80, function(conn)
-    conn:on("receive", function(conn, data)
-      print("< "  .. data)
-      conn:send(response())
-      conn:close()
-    end)
-  end)
-end
+connect()
