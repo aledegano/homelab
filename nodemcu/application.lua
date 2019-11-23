@@ -1,24 +1,33 @@
--- initiate the mqtt client and set keepalive timer to 120sec
-mqtt = mqtt.Client("NodeMCU", 120, "username", "password")
+mqtt = mqtt.Client("NodeMCU", 120)
 
 mqtt:on("connect", function(con) print ("connected") end)
-mqtt:on("offline", function(con) print ("offline") end)
+mqtt:on("offline",
+     function(con)
+          print ("offline")
+          node.restart()
+     end
+)
 
--- on receive message
-mqtt:on("message", function(conn, topic, data)
-  print(topic .. ":" )
-  if data ~= nil then
-    print(data)
-  end
-end)
-
-mqtt:connect("hostname", port, 0, function(conn)
-  print("connected")
-  -- subscribe topic with qos = 0
-  mqtt:subscribe("my_topic",0, function(conn)
-    -- publish a message with data = my_message, QoS = 0, retain = 0
-    mqtt:publish("/sensor/nodemcu/random",math.random(100),0,0, function(conn)
-      print("sent")
-    end)
+function connect()
+  mqtt:connect("192.168.1.116", 31883, 0, function(conn)
+    publish()
+    start()
   end)
-end)
+end
+
+function publish()
+  mqtt:publish("/sensor/nodemcu/random",math.random(100),0,0, function(conn)
+  end)
+end
+
+function start()
+  tmr.alarm(1, 20000, 1, function()
+       if pcall(publish) then
+            print("Send OK")
+       else
+            print("Send err" )
+       end
+  end)
+end
+
+connect()

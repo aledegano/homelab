@@ -8,7 +8,7 @@ spec:
   type: NodePort
   ports:
   - name: mosquitto-default-listener
-    port: 1889
+    port: 1883
     nodePort: 31883
     protocol: TCP
   - name: mosquitto-extra-listener
