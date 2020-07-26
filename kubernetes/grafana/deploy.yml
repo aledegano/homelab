@@ -18,8 +18,15 @@ spec:
       labels:
         app: grafana
     spec:
+      volumes:
+        - name: config-volume
+          configMap:
+            name: grafana-custom
       containers:
       - name: grafana
         image: grafana/grafana:6.3.5
         ports:
         - containerPort: 3000
+        volumeMounts:
+          - name: config-volume
+            mountPath: /etc/grafana
