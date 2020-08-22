@@ -22,17 +22,27 @@ spec:
         - name: config-volume
           configMap:
             name: grafana-custom
+        - name: datasources-volume
+          configMap:
+            name: grafana-datasources
+        - name: dashboards-providers-volume
+          configMap:
+            name: grafana-dashboards-providers
         - name: dashboards-volume
           configMap:
             name: grafana-dashboards
       containers:
       - name: grafana
-        image: grafana/grafana:7.1.1
+        image: grafana/grafana:7.1.4
         ports:
         - containerPort: 3000
         volumeMounts:
           - name: config-volume
             mountPath: /etc/grafana
+          - name: datasources-volume
+            mountPath: /etc/grafana/provisioning/datasources
+          - name: dashboards-providers-volume
+            mountPath: /etc/grafana/provisioning/dashboards
           - name: dashboards-volume
             mountPath: /var/lib/grafana/dashboards
         env:

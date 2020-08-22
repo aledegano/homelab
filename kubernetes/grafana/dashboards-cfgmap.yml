@@ -21,7 +21,6 @@ data:
       "editable": true,
       "gnetId": null,
       "graphTooltip": 0,
-      "id": 3,
       "links": [],
       "panels": [
         {
@@ -29,6 +28,14 @@ data:
           "bars": false,
           "dashLength": 10,
           "dashes": false,
+          "datasource": null,
+          "fieldConfig": {
+            "defaults": {
+              "custom": {},
+              "links": []
+            },
+            "overrides": []
+          },
           "fill": 1,
           "fillGradient": 0,
           "gridPos": {
@@ -37,6 +44,7 @@ data:
             "x": 0,
             "y": 0
           },
+          "hiddenSeries": false,
           "id": 2,
           "legend": {
             "avg": false,
@@ -50,10 +58,8 @@ data:
           "lines": true,
           "linewidth": 1,
           "nullPointMode": "null",
-          "options": {
-            "dataLinks": []
-          },
           "percentage": false,
+          "pluginVersion": "7.1.4",
           "pointradius": 2,
           "points": false,
           "renderer": "flot",
@@ -110,23 +116,19 @@ data:
           }
         },
         {
-          "gridPos": {
-            "h": 8,
-            "w": 3,
-            "x": 6,
-            "y": 0
-          },
-          "id": 6,
-          "options": {
-            "fieldOptions": {
-              "calcs": [
-                "mean"
-              ],
-              "defaults": {
-                "mappings": [],
-                "max": 50,
-                "min": 0,
-                "thresholds": [
+          "datasource": null,
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "thresholds"
+              },
+              "custom": {},
+              "mappings": [],
+              "max": 50,
+              "min": 0,
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
                   {
                     "color": "green",
                     "value": null
@@ -135,17 +137,32 @@ data:
                     "color": "red",
                     "value": 40
                   }
-                ],
-                "unit": "celsius"
+                ]
               },
-              "override": {},
+              "unit": "celsius"
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 8,
+            "w": 3,
+            "x": 6,
+            "y": 0
+          },
+          "id": 6,
+          "options": {
+            "orientation": "auto",
+            "reduceOptions": {
+              "calcs": [
+                "mean"
+              ],
+              "fields": "",
               "values": false
             },
-            "orientation": "auto",
             "showThresholdLabels": false,
             "showThresholdMarkers": true
           },
-          "pluginVersion": "6.3.5",
+          "pluginVersion": "7.1.4",
           "targets": [
             {
               "expr": "mqtt_consumer{topic=\"/sensor/nodemcu/temperature\"}",
@@ -163,6 +180,14 @@ data:
           "bars": false,
           "dashLength": 10,
           "dashes": false,
+          "datasource": null,
+          "fieldConfig": {
+            "defaults": {
+              "custom": {},
+              "links": []
+            },
+            "overrides": []
+          },
           "fill": 1,
           "fillGradient": 0,
           "gridPos": {
@@ -171,6 +196,7 @@ data:
             "x": 0,
             "y": 8
           },
+          "hiddenSeries": false,
           "id": 4,
           "legend": {
             "avg": false,
@@ -184,10 +210,8 @@ data:
           "lines": true,
           "linewidth": 1,
           "nullPointMode": "null",
-          "options": {
-            "dataLinks": []
-          },
           "percentage": false,
+          "pluginVersion": "7.1.4",
           "pointradius": 2,
           "points": false,
           "renderer": "flot",
@@ -244,6 +268,33 @@ data:
           }
         },
         {
+          "datasource": null,
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "thresholds"
+              },
+              "custom": {},
+              "mappings": [],
+              "max": 100,
+              "min": 0,
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  },
+                  {
+                    "color": "red",
+                    "value": 75
+                  }
+                ]
+              },
+              "unit": "humidity"
+            },
+            "overrides": []
+          },
           "gridPos": {
             "h": 8,
             "w": 3,
@@ -252,34 +303,18 @@ data:
           },
           "id": 7,
           "options": {
-            "fieldOptions": {
+            "orientation": "auto",
+            "reduceOptions": {
               "calcs": [
                 "mean"
               ],
-              "defaults": {
-                "mappings": [],
-                "max": 50,
-                "min": 0,
-                "thresholds": [
-                  {
-                    "color": "green",
-                    "value": null
-                  },
-                  {
-                    "color": "red",
-                    "value": 40
-                  }
-                ],
-                "unit": "humidity"
-              },
-              "override": {},
+              "fields": "",
               "values": false
             },
-            "orientation": "auto",
             "showThresholdLabels": false,
             "showThresholdMarkers": true
           },
-          "pluginVersion": "6.3.5",
+          "pluginVersion": "7.1.4",
           "targets": [
             {
               "expr": "mqtt_consumer{topic=\"/sensor/nodemcu/humidity\"}",
@@ -293,7 +328,7 @@ data:
           "type": "gauge"
         }
       ],
-      "schemaVersion": 19,
+      "schemaVersion": 26,
       "style": "dark",
       "tags": [],
       "templating": {
@@ -320,5 +355,5 @@ data:
       "timezone": "",
       "title": "Temp/Humidity",
       "uid": "2XSGDNmRz",
-      "version": 2
+      "version": 1
     }
