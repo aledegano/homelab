@@ -29,6 +29,7 @@ data:
           "dashLength": 10,
           "dashes": false,
           "datasource": null,
+          "decimals": 0,
           "fieldConfig": {
             "defaults": {
               "custom": {},
@@ -94,14 +95,17 @@ data:
           },
           "yaxes": [
             {
-              "format": "short",
-              "label": null,
+              "$$hashKey": "object:44",
+              "decimals": 0,
+              "format": "celsius",
+              "label": "",
               "logBase": 1,
               "max": null,
               "min": null,
               "show": true
             },
             {
+              "$$hashKey": "object:45",
               "format": "short",
               "label": null,
               "logBase": 1,
@@ -181,6 +185,7 @@ data:
           "dashLength": 10,
           "dashes": false,
           "datasource": null,
+          "decimals": 0,
           "fieldConfig": {
             "defaults": {
               "custom": {},
@@ -246,6 +251,8 @@ data:
           },
           "yaxes": [
             {
+              "$$hashKey": "object:140",
+              "decimals": 0,
               "format": "humidity",
               "label": null,
               "logBase": 1,
@@ -254,6 +261,7 @@ data:
               "show": true
             },
             {
+              "$$hashKey": "object:141",
               "format": "short",
               "label": null,
               "logBase": 1,
