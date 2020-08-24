@@ -326,13 +326,14 @@ data:
           "targets": [
             {
               "expr": "mqtt_consumer{topic=\"/sensor/nodemcu/humidity\"}",
-              "legendFormat": "Temperature",
+              "interval": "",
+              "legendFormat": "Humidity",
               "refId": "A"
             }
           ],
           "timeFrom": null,
           "timeShift": null,
-          "title": "Temperature",
+          "title": "Humidity",
           "type": "gauge"
         }
       ],
@@ -363,5 +364,5 @@ data:
       "timezone": "",
       "title": "Temp/Humidity",
       "uid": "2XSGDNmRz",
-      "version": 1
+      "version": 2
     }
