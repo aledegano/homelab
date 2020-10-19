@@ -5,7 +5,7 @@
 - Default user/pass available
 
 ## How-to
-- Install galaxy's modules: `ansible-galaxy install -r requirements.yml`
+- Install the required dependencies on the workstation: `./host_setup/host_setup.sh`
 - Run the playbook to setup the user: `ansible-playbook -i raspi_pre_user.ini user.yml` with the default user
 - Run the playbook to complete the k3s installation: `ansible-playbook -i inventory.ini k3s_deploy.yml` which will remove the default Raspbian user
 
