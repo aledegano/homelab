@@ -18,8 +18,8 @@ spec:
         image: eclipse-mosquitto:1.16.12
         resources:
           limits:
-            cpu: 0.5
-            memory: 500Mi
+            cpu: 50m
+            memory: 64Mi
         ports:
         - containerPort: 9001
         - containerPort: 1883
