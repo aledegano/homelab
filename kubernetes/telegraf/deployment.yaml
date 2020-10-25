@@ -4,6 +4,8 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: telegraf
+  annotations:
+    fluxcd.io/automated: "true"
   labels:
     app.kubernetes.io/name: telegraf
     helm.sh/chart: telegraf-1.2.0
