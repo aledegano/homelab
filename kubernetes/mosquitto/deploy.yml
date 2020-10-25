@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
       - name: mosquitto
-        image: eclipse-mosquitto:1.16.12
+        image: eclipse-mosquitto:1.6.12
         resources:
           limits:
             cpu: 50m
