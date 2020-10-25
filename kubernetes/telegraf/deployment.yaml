@@ -4,8 +4,6 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: telegraf
-  annotations:
-    fluxcd.io/automated: "true"
   labels:
     app.kubernetes.io/name: telegraf
     helm.sh/chart: telegraf-1.2.0
@@ -24,7 +22,7 @@ spec:
     spec:
       containers:
       - name: telegraf
-        image: telegraf:1.16-alpine
+        image: telegraf:1.16.0
         imagePullPolicy: "IfNotPresent"
         resources: {}
         env:
