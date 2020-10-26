@@ -22,3 +22,8 @@ data:
       scrape_interval: 15s
       static_configs:
         - targets: ['telegraf:9090']
+
+    - job_name: flux
+      scrape_interval: 15s
+      static_configs:
+        - targets: ['flux-metrics.flux.svc.cluster.local:3031']
