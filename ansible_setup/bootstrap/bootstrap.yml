@@ -1,46 +1,46 @@
 ---
 - name: Create user on remote host
   hosts: all
-  vars: 
-    createuser: "{{ ssh_username }}"
-  roles:
-    - role: chrisgavin.ansible-ssh-host-signer
-      ssh_host_signer_hostnames: "{{ ssh_signer_hostname }}"
-      ssh_host_signer_id: "raspi"
   tasks:
   - apt: name=python-pip
     become: yes
     become_user: root
+
   - name: Setup | create user
     become: yes
     become_user: root
     user:
-      name: "{{ createuser }}"
+      name: "{{ ssh_username }}"
       password: "{{ lookup('password', '.pass.txt length=16 chars=ascii_letters') }}"
       shell: /bin/bash
 
   - name: Setup | authorized key upload
     become: yes
     become_user: root
-    authorized_key: user={{ createuser }}
+    authorized_key: user={{ ssh_username }}
       key="{{ lookup('file', ssh_public_key ) }}"
-      path='/home/{{ createuser }}/.ssh/authorized_keys'
-      manage_dir=no 
+      path='/home/{{ ssh_username }}/.ssh/authorized_keys'
+      manage_dir=no
 
   - name: Sudoers | update sudoers file and validate
     become: yes
     become_user: root
     lineinfile: "dest=/etc/sudoers
-      line='{{ createuser }} ALL=(ALL) NOPASSWD: ALL'
-      regexp='{{ createuser }} ALL=(ALL) NOPASSWD: ALL'
+      line='{{ ssh_username }} ALL=(ALL) NOPASSWD: ALL'
+      regexp='{{ ssh_username }} ALL=(ALL) NOPASSWD: ALL'
       state=present"
 
   - name: Enable containers
     become: yes
-    lineinfile:
-      path: /boot/cmdline.txt
-      line: cgroup_memory=1 cgroup_enable=memory
-      insertafter: rootwait
+    shell:
+      cmd: echo "cgroup_memory=1 cgroup_enable=memory" >> /boot/cmdline.txt
+
+  - name: disable dphys
+    become: yes
+    service:
+      name: dphys-swapfile
+      enabled: no
+      state: stopped
 
   - name: Reboot to enable containers
     become: yes
