@@ -26,15 +26,6 @@ Minio credentials:
 ```
 kubectl create secret generic minio-secret --from-literal=access_key=$(bw get username minio.raspi.hal) --from-literal=secret_key=$(bw get password minio.raspi.hal)
 ```
-
-FluxCD private SSH key to access this repo on GitHub (with RW access):
-```
-bw list items --search github_homelab_deploy_key | jq '.[].notes' -r > /tmp/github_homelab_deploy_key
-kubectl create secret generic flux-git-deploy --from-file=identity=/tmp/github_homelab_deploy_key
-rm -rf /tmp/github_homelab_deploy_key
-```
-
-Deploy FluxCD: `kubectl apply -f flux`.
-
-Flux will take care of deploying all the other application on the cluster, synchronizing directly
-with Github.
+Deploy FluxCD: execute `./flux/bootstrap_flux.sh`.
+FluxCD will take care of applying all the manifests defined in `kubernetes` directly from this
+GitHub repository.
