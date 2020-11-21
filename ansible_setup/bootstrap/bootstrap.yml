@@ -51,20 +51,6 @@
       enabled: no
       state: stopped
 
-  - name: Reboot to enable containers
-    become: yes
-    reboot:
-
-- name: master only on Raspberry Pi 4
-  hosts: master
-  tasks:
-  - name: Enable 64-bit kernel
-    become: yes
-    lineinfile:
-      path: /boot/config.txt
-      line: 'arm_64bit=1'
-      regex: '^#arm_64bit'
-
   - name: Mount external USB drive
     become: yes
     ansible.posix.mount:
@@ -72,3 +58,17 @@
       src: /dev/sda1
       fstype: ext4
       state: present
+
+  - name: Reboot to enable containers
+    become: yes
+    reboot:
+
+- name: master only on Raspberry Pi 4
+  hosts: raspi4
+  tasks:
+  - name: Enable 64-bit kernel
+    become: yes
+    lineinfile:
+      path: /boot/config.txt
+      line: 'arm_64bit=1'
+      regex: '^#arm_64bit'
