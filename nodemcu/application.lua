@@ -1,6 +1,6 @@
 dht11_pin = 4
 mqtt = mqtt.Client("NodeMCU", 120)
-mqtt_broker_addr = "192.168.1.116"
+mqtt_broker_addr = "192.168.1.11"
 mqtt_broker_port = 31883
 timer = tmr.create()
 
