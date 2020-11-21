@@ -15,10 +15,14 @@
       state: absent
 
   - name: local-storage
+    become: yes
     file:
       path: /data
       state: directory
 
+- name: get kubectl config
+  hosts: master
+  tasks:
   - name: Ensure dest dir for kubectl conf exists
     local_action:
       module: file
@@ -36,8 +40,8 @@
     local_action:
       module: replace
       path: ~/.kube/config
-      regexp: 'localhost'
-      replace: "{{ inventory_hostname }}"
+      regexp: '127.0.0.1'
+      replace: "{{ ansible_host }}"
 
   - name: Ensure remote dir for kubectl conf exists
     file:
