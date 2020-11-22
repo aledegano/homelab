@@ -63,7 +63,7 @@
     become: yes
     reboot:
 
-- name: master only on Raspberry Pi 4
+- name: Enable 64-bit kernel on Raspberry Pi 4
   hosts: raspi4
   tasks:
   - name: Enable 64-bit kernel
