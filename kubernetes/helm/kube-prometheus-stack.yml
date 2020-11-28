@@ -5,7 +5,7 @@ metadata:
   name: kube-prometheus-stack-values
   namespace: flux-system
 data:
-  values.yml: |
+  defaults: |
     grafana:
       ingress:
         hosts:
@@ -39,6 +39,7 @@ spec:
       interval: 10m
   valuesFrom:
     - kind: ConfigMap
+      valuesKey: defaults
       name: kube-prometheus-stack-values
     - kind: Secret
       name: grafana-admin-credentials
