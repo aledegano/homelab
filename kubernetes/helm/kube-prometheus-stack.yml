@@ -37,10 +37,10 @@ spec:
         name: prometheus-community
         namespace: flux-system
       interval: 10m
-      valuesFrom:
-        - kind: ConfigMap
-          name: kube-prometheus-stack-values
-        - kind: Secret
-          name: grafana-admin-credentials
-          valuesKey: password
-          targetPath: grafana.adminPassword
+  valuesFrom:
+    - kind: ConfigMap
+      name: kube-prometheus-stack-values
+    - kind: Secret
+      name: grafana-admin-credentials
+      valuesKey: password
+      targetPath: grafana.adminPassword
