@@ -29,3 +29,8 @@ kubectl create secret generic minio-secret --from-literal=access_key=$(bw get us
 Deploy FluxCD: execute `./flux/bootstrap_flux.sh`.
 FluxCD will take care of applying all the manifests defined in `kubernetes` directly from this
 GitHub repository.
+
+Discord webhook for notifications:
+```
+kubectl --namespace flux-system create secret generic discord-url --from-literal=$(bw get password discord-webhook)
+```
