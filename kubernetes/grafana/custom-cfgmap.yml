@@ -5,5 +5,4 @@ metadata:
 data:
   grafana.ini: |
     [server]
-    root_url = https://grafana.adegano.homelabs.eu
-    protocol = https
+    root_url = https://grafana.raspi.hal
