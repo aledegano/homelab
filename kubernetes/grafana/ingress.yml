@@ -2,6 +2,8 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: grafana
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-prod
 spec:
   rules:
   - host: grafana.raspi.hal
@@ -24,3 +26,7 @@ spec:
             name: grafana
             port:
               name: grafana-web
+  tls:
+  - hosts:
+    - grafana.adegano.homelabs.eu
+    secretName: grafana-cert
