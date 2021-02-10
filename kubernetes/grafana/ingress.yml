@@ -7,16 +7,6 @@ metadata:
     traefik.ingress.kubernetes.io/redirect-entry-point: https
 spec:
   rules:
-  - host: grafana.raspi.hal
-    http:
-      paths:
-      - path: /
-        pathType: Prefix
-        backend:
-          service:
-            name: grafana
-            port:
-              name: grafana-web
   - host: grafana.adegano.homelabs.eu
     http:
       paths:
