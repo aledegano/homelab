@@ -32,5 +32,5 @@ GitHub repository.
 
 Discord webhook for notifications:
 ```
-kubectl --namespace flux-system create secret generic discord-url --from-literal=$(bw get password discord-webhook)
+kubectl --namespace flux-system create secret generic discord-url --from-literal=address=$(bw get password discord-webhook)
 ```
