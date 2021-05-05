@@ -63,3 +63,10 @@ spec:
               mountPath: /data
             - name: config-volume
               mountPath: /etc/config
+          resources:
+            requests:
+              memory: "256Mi"
+              cpu: "0.5"
+            limits:
+              memory: "512Mi"
+              cpu: "1"

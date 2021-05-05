@@ -19,7 +19,7 @@ static domain_name_servers=192.168.1.1 192.168.1.7
 ## How-to
 - Install the required dependencies on the workstation: `./host_setup/host_setup.sh`
 - Run the playbook to setup the user: `ansible-playbook -i raspi_pre_user.ini user.yml` with the default user
-- Run the playbook to complete the k3s installation: `ansible-playbook -i inventory.ini k3s_deploy.yml` which will remove the default Raspbian user
+- Run the playbook to complete the k3s installation: `ansible-playbook -i inventory.yml k3s_deploy.yml` which will remove the default Raspbian user
 
 ### Requirements
 - python2.7
