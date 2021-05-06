@@ -10,8 +10,7 @@ export GITHUB_TOKEN=$(bw list items --search github_pat_repo_all | jq '.[].notes
 flux bootstrap github \
   --owner=aledegano \
   --repository=homelab \
-  --path=kubernetes \
+  --path=applications \
   --personal \
-  --arch=arm \
   --components=source-controller,kustomize-controller,helm-controller,notification-controller \
   --version=latest
