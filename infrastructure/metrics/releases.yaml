@@ -1,0 +1,59 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: prometheus
+  namespace: metrics
+spec:
+  releaseName: prometheus
+  chart:
+    spec:
+      chart: prometheus
+      sourceRef:
+        kind: HelmRepository
+        name: prometheus-community
+        namespace: flux-system
+      version: "13.8.0"
+  interval: 5m
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: grafana
+  namespace: metrics
+spec:
+  releaseName: grafana
+  chart:
+    spec:
+      chart: grafana
+      sourceRef:
+        kind: HelmRepository
+        name: grafana
+        namespace: flux-system
+      version: "6.8.4"
+  interval: 5m
+  values:
+    ingress:
+      enabled: true
+      annotations:
+        kubernetes.io/ingress.class: traefik
+        cert-manager.io/cluster-issuer: letsencrypt-production
+      hosts:
+      - grafana.adegano.homelabs.eu
+      tls:
+      - hosts:
+        - grafana.adegano.homelabs.eu
+        secretName: grafana-tls
+    grafana.ini:
+      auth.anonymous:
+        enabled: true
+        org_name: "Main Org."
+        org_role: "Viewer"
+    datasources:
+     datasources.yaml:
+       apiVersion: 1
+       datasources:
+       - name: Prometheus
+         type: prometheus
+         url: http://prometheus-server:9090
+         isDefault: true
