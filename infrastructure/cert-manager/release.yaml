@@ -10,7 +10,7 @@ spec:
       chart: cert-manager
       sourceRef:
         kind: HelmRepository
-        name: cert-manager
+        name: jetstack
         namespace: flux-system
       version: "v1.3.1"
   values:
