@@ -45,6 +45,8 @@ spec:
         kuberentes-deployments:
           gnetId: 8588
           datasource: Prometheus
+        temperature-humidity:
+          url: https://raw.githubusercontent.com/aledegano/homelab/main/dashboards/temp-humid.json
     dashboardProviders:
      dashboardproviders.yaml:
        apiVersion: 1
