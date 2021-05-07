@@ -6,4 +6,5 @@ resources:
   - cert-manager.yaml
   - k8s-at-home.yaml
   - grafana.yaml
+  - influxdata.yaml
   - prometheus.yaml

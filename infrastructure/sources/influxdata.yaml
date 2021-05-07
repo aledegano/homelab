@@ -1,0 +1,8 @@
+---
+apiVersion: source.toolkit.fluxcd.io/v1beta1
+kind: HelmRepository
+metadata:
+  name: influxdata
+spec:
+  interval: 5m
+  url: https://influxdata.github.io/helm-charts
