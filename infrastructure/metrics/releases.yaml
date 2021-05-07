@@ -33,31 +33,18 @@ spec:
       version: "6.8.4"
   interval: 5m
   values:
-    ingress:
-      enabled: true
-      annotations:
-        kubernetes.io/ingress.class: traefik
-        cert-manager.io/cluster-issuer: letsencrypt-production
-        traefik.ingress.kubernetes.io/redirect-entry-point: https
-      hosts:
-      - grafana.adegano.homelabs.eu
-      tls:
-      - hosts:
-        - grafana.adegano.homelabs.eu
-        secretName: grafana-tls
-    grafana.ini:
-      auth.anonymous:
-        enabled: true
-        org_name: "Main Org."
-        org_role: "Viewer"
-    datasources:
-     datasources.yaml:
-       apiVersion: 1
-       datasources:
-       - name: Prometheus
-         type: prometheus
-         url: http://prometheus-server
-         isDefault: true
+    admin:
+      existingSecret: grafana-admin-credentials
+      userKey: username
+      passwordKey: password
+    dashboards:
+      default:
+        node-exporter:
+          gnetId: 11074
+          datasource: Prometheus
+        kuberentes-deployments:
+          gnetId: 8588
+          datasource: Prometheus
     dashboardProviders:
      dashboardproviders.yaml:
        apiVersion: 1
@@ -70,11 +57,28 @@ spec:
          editable: true
          options:
            path: /var/lib/grafana/dashboards/default
-    dashboards:
-      default:
-        node-exporter:
-          gnetId: 11074
-          datasource: Prometheus
-        kuberentes-deployments:
-          gnetId: 8588
-          datasource: Prometheus
+    datasources:
+     datasources.yaml:
+       apiVersion: 1
+       datasources:
+       - name: Prometheus
+         type: prometheus
+         url: http://prometheus-server
+         isDefault: true
+    grafana.ini:
+      auth.anonymous:
+        enabled: true
+        org_name: "Main Org."
+        org_role: "Viewer"
+    ingress:
+      enabled: true
+      annotations:
+        kubernetes.io/ingress.class: traefik
+        cert-manager.io/cluster-issuer: letsencrypt-production
+        traefik.ingress.kubernetes.io/redirect-entry-point: https
+      hosts:
+      - grafana.adegano.homelabs.eu
+      tls:
+      - hosts:
+        - grafana.adegano.homelabs.eu
+        secretName: grafana-tls
