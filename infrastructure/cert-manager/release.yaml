@@ -15,3 +15,4 @@ spec:
       version: "v1.3.1"
   values:
     installCRDs: true
+  interval: 5m
