@@ -11,6 +11,4 @@ flux bootstrap github \
   --owner=aledegano \
   --repository=homelab \
   --path=applications \
-  --personal \
-  --components=source-controller,kustomize-controller,helm-controller,notification-controller \
-  --version=latest
+  --personal
