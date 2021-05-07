@@ -38,6 +38,7 @@ spec:
       annotations:
         kubernetes.io/ingress.class: traefik
         cert-manager.io/cluster-issuer: letsencrypt-production
+        traefik.ingress.kubernetes.io/redirect-entry-point: https
       hosts:
       - grafana.adegano.homelabs.eu
       tls:
@@ -57,3 +58,20 @@ spec:
          type: prometheus
          url: http://prometheus-server:9090
          isDefault: true
+    dashboardProviders:
+     dashboardproviders.yaml:
+       apiVersion: 1
+       providers:
+       - name: 'default'
+         orgId: 1
+         folder: ''
+         type: file
+         disableDeletion: false
+         editable: true
+         options:
+           path: /var/lib/grafana/dashboards/default
+    dashboards:
+      default:
+        node-exporter:
+          gnetId: 11074
+          datasource: Prometheus
