@@ -19,7 +19,7 @@ Kubernetes cluster on the Raspberry Pi.
 
 Grafana credentials:
 ```
-kubectl create secret generic grafana-admin-credentials --from-literal=username=$(bw get username grafana.raspi.hal) --from-literal=password=$(bw get password grafana.raspi.hal)
+kubectl --namespace metrics create secret generic grafana-admin-credentials --from-literal=username=$(bw get username grafana.raspi.hal) --from-literal=password=$(bw get password grafana.raspi.hal)
 ```
 
 Minio credentials:

@@ -4,5 +4,6 @@ kind: Kustomization
 namespace: flux-system
 resources:
   - cert-manager.yaml
-  - prometheus.yaml
+  - k8s-at-home.yaml
   - grafana.yaml
+  - prometheus.yaml
