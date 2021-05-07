@@ -56,7 +56,7 @@ spec:
        datasources:
        - name: Prometheus
          type: prometheus
-         url: http://prometheus-server:9090
+         url: http://prometheus-server
          isDefault: true
     dashboardProviders:
      dashboardproviders.yaml:
@@ -74,4 +74,7 @@ spec:
       default:
         node-exporter:
           gnetId: 11074
+          datasource: Prometheus
+        kuberentes-deployments:
+          gnetId: 8588
           datasource: Prometheus
