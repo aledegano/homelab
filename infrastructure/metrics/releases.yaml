@@ -39,11 +39,15 @@ spec:
       passwordKey: password
     dashboards:
       default:
-        node-exporter:
-          gnetId: 11074
-          datasource: Prometheus
+        flux-cluster-reconciliation:
+          url: https://raw.githubusercontent.com/fluxcd/flux2/main/manifests/monitoring/grafana/dashboards/cluster.json
+        flux-control-plane:
+          url: https://raw.githubusercontent.com/fluxcd/flux2/main/manifests/monitoring/grafana/dashboards/control-plane.json
         kuberentes-deployments:
           gnetId: 8588
+          datasource: Prometheus
+        node-exporter:
+          gnetId: 11074
           datasource: Prometheus
         temperature-humidity:
           url: https://raw.githubusercontent.com/aledegano/homelab/main/dashboards/temp-humid.json
