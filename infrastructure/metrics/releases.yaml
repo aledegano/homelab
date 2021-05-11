@@ -39,6 +39,9 @@ spec:
       passwordKey: password
     dashboards:
       default:
+        cert-manager:
+          gnetId: 11001
+          datasource: Prometheus
         flux-cluster-reconciliation:
           url: https://raw.githubusercontent.com/fluxcd/flux2/main/manifests/monitoring/grafana/dashboards/cluster.json
         flux-control-plane:
