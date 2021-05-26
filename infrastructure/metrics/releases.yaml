@@ -19,8 +19,8 @@ spec:
     server:
       nodeSelector:
         kubernetes.io/arch: arm64
-    persistentVolume:
-      enabled: false
+      persistentVolume:
+        enabled: false
 ---
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
