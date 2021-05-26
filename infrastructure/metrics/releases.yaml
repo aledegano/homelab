@@ -15,6 +15,12 @@ spec:
         namespace: flux-system
       version: "13.8.0"
   interval: 5m
+  values:
+    server:
+      nodeSelector:
+        kubernetes.io/arch: arm64
+    persistentVolume:
+      enabled: false
 ---
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
@@ -55,25 +61,25 @@ spec:
         temperature-humidity:
           url: https://raw.githubusercontent.com/aledegano/homelab/main/dashboards/temp-humid.json
     dashboardProviders:
-     dashboardproviders.yaml:
-       apiVersion: 1
-       providers:
-       - name: 'default'
-         orgId: 1
-         folder: ''
-         type: file
-         disableDeletion: false
-         editable: true
-         options:
-           path: /var/lib/grafana/dashboards/default
+      dashboardproviders.yaml:
+        apiVersion: 1
+        providers:
+          - name: "default"
+            orgId: 1
+            folder: ""
+            type: file
+            disableDeletion: false
+            editable: true
+            options:
+              path: /var/lib/grafana/dashboards/default
     datasources:
-     datasources.yaml:
-       apiVersion: 1
-       datasources:
-       - name: Prometheus
-         type: prometheus
-         url: http://prometheus-server
-         isDefault: true
+      datasources.yaml:
+        apiVersion: 1
+        datasources:
+          - name: Prometheus
+            type: prometheus
+            url: http://prometheus-server
+            isDefault: true
     grafana.ini:
       auth.anonymous:
         enabled: true
@@ -86,8 +92,8 @@ spec:
         cert-manager.io/cluster-issuer: letsencrypt-production
         traefik.ingress.kubernetes.io/redirect-entry-point: https
       hosts:
-      - grafana.adegano.homelabs.eu
-      tls:
-      - hosts:
         - grafana.adegano.homelabs.eu
-        secretName: grafana-tls
+      tls:
+        - hosts:
+            - grafana.adegano.homelabs.eu
+          secretName: grafana-tls
