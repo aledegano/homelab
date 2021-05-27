@@ -18,7 +18,7 @@ spec:
   values:
     server:
       nodeSelector:
-        kubernetes.io/arch: arm64
+        kubernetes.io/hostname: raspi3
       persistentVolume:
         enabled: false
 ---
