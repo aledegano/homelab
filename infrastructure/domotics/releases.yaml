@@ -15,6 +15,7 @@ spec:
         namespace: flux-system
       version: "2.3.2"
   interval: 5m
+  timeout: 20m
   values:
     service:
       type: NodePort
@@ -39,21 +40,22 @@ spec:
         namespace: flux-system
       version: "1.7.38"
   interval: 5m
+  timeout: 20m
   values:
     image:
       repo: "telegraf"
       tag: "1.17"
     config:
       outputs:
-      - prometheus_client:
-          listen: ":9090"
+        - prometheus_client:
+            listen: ":9090"
       inputs:
-      - mqtt_consumer:
-          servers:
-            - "tcp://192.168.1.10:31883"
-          topics:
-            - "/sensor/#"
-          data_format: "value"
+        - mqtt_consumer:
+            servers:
+              - "tcp://192.168.1.10:31883"
+            topics:
+              - "/sensor/#"
+            data_format: "value"
     service:
       enabled: true
       annotations:

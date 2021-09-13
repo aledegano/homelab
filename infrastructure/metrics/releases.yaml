@@ -15,6 +15,7 @@ spec:
         namespace: flux-system
       version: "13.8.0"
   interval: 5m
+  timeout: 20m
   values:
     server:
       nodeSelector:
@@ -38,6 +39,7 @@ spec:
         namespace: flux-system
       version: "6.8.4"
   interval: 5m
+  timeout: 20m
   values:
     admin:
       existingSecret: grafana-admin-credentials
