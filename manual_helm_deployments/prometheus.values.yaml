@@ -1,0 +1,5 @@
+# helm -n monitoring install prometheus prometheus-community/prometheus -f prometheus.values.yaml
+---
+server:
+  persistentVolume:
+    enabled: false

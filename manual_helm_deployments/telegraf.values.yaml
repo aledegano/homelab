@@ -1,0 +1,20 @@
+# helm -n domotics install telegraf influxdata/telegraf -f telegraf.values.yaml
+---
+image:
+  repo: "telegraf"
+  tag: "1.17"
+config:
+  outputs:
+    - prometheus_client:
+        listen: ":9090"
+  inputs:
+    - mqtt_consumer:
+        servers:
+          - "tcp://192.168.1.10:31883"
+        topics:
+          - "/sensor/#"
+        data_format: "value"
+service:
+  enabled: true
+  annotations:
+    prometheus.io/scrape: "true"

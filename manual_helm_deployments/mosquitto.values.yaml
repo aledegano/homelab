@@ -1,0 +1,11 @@
+---
+service:
+  main:
+    type: NodePort
+    ports:
+      http:
+        enabled: false
+      mqtt:
+        enabled: true
+        port: 1883
+        nodePort: 31883
