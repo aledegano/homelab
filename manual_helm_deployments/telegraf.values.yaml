@@ -2,7 +2,7 @@
 ---
 image:
   repo: "telegraf"
-  tag: "1.17"
+  tag: "1.20.3"
 config:
   outputs:
     - prometheus_client:
@@ -14,6 +14,15 @@ config:
         topics:
           - "/sensor/#"
         data_format: "value"
+nodeSelector:
+  kubernetes.io/hostname: raspi3
+resources:
+  limits:
+    cpu: 100m
+    memory: 128Mi
+  requests:
+    cpu: 100m
+    memory: 128Mi
 service:
   enabled: true
   annotations:

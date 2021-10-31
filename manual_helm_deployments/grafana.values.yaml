@@ -1,3 +1,4 @@
+# helm -n monitoring install grafana grafana/grafana -f grafana.values.yaml
 ---
 admin:
   existingSecret: grafana-admin-credentials
@@ -57,3 +58,12 @@ ingress:
     - hosts:
         - grafana.adegano.homelabs.eu
       secretName: grafana-tls
+nodeSelector:
+  kubernetes.io/hostname: raspi3
+resources:
+  limits:
+    cpu: 300m
+    memory: 256Mi
+  requests:
+    cpu: 300m
+    memory: 256Mi

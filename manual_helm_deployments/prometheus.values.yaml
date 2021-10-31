@@ -1,5 +1,16 @@
 # helm -n monitoring install prometheus prometheus-community/prometheus -f prometheus.values.yaml
 ---
+alertmanager:
+  enabled: false
+pushgateway:
+  enabled: false
 server:
   persistentVolume:
     enabled: false
+resources:
+  limits:
+    cpu: 300m
+    memory: 512Mi
+  requests:
+    cpu: 300m
+    memory: 512Mi

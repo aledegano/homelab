@@ -1,0 +1,15 @@
+# helm -n multimedia install sonarr k8s-at-home/sonarr -f sonarr.values.yaml
+---
+persistence:
+  config:
+    enabled: true
+    existingClaim: nfs
+nodeSelector:
+  kubernetes.io/hostname: raspi3
+resources:
+  limits:
+    cpu: 100m
+    memory: 128Mi
+  requests:
+    cpu: 100m
+    memory: 128Mi

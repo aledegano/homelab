@@ -1,3 +1,12 @@
-# helm -n cert-manager install cert-manager jetstack/cert-manager -f cert-manager.values.yaml
+# helm -n cert-manager install cert-manager jetstack/cert-manager -f cert-manager.values.yaml --version 1.4.2
 ---
 installCRDs: true
+resources:
+  limits:
+    cpu: 100m
+    memory: 128Mi
+  requests:
+    cpu: 100m
+    memory: 128Mi
+nodeSelector:
+  kubernetes.io/hostname: raspi3

@@ -3,6 +3,7 @@ apiVersion: cert-manager.io/v1
 kind: ClusterIssuer
 metadata:
   name: letsencrypt-production
+  namespace: cert-manager
 spec:
   acme:
     email: a.degano@gmail.com
@@ -10,6 +11,6 @@ spec:
     privateKeySecretRef:
       name: letsencrypt-production
     solvers:
-    - http01:
-        ingress:
-          class: traefik
+      - http01:
+          ingress:
+            class: traefik
